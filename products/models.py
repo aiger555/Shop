@@ -152,3 +152,22 @@ class Help(models.Model):
 
     def __str__(self):
         return self.question  
+
+
+class Footer(models.Model):
+    class Type(models.Model):
+        CHOICES = (
+        (0, 'Number'),
+        (1, 'Email'),
+        (2, 'Instagram'),
+        (3, 'Telegram'),
+        (4, 'WhatsApp'),
+        )
+    logotype = models.ImageField(upload_to='static/images/')
+    info = models.TextField()
+    id_header = models.IntegerField() 
+    number = models.IntegerField(choices=Type.CHOICES)
+    email = models.CharField(max_length=100, choices=Type.CHOICES)
+    instagram = models.CharField(max_length=100, choices=Type.CHOICES)
+    telegram = models.CharField(max_length=100, choices=Type.CHOICES)
+    whatsapp = models.IntegerField(choices=Type.CHOICES)

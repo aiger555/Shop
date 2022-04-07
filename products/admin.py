@@ -13,6 +13,7 @@ from .models import (
                     Advantages,
                     PublicOffers,
                     Help,
+                    Footer,
                     )
 
 
@@ -28,4 +29,5 @@ admin.site.register(News)
 admin.site.register(Advantages)
 admin.site.register(PublicOffers)
 admin.site.register(Help)
+admin.site.register(Footer)
 

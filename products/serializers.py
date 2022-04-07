@@ -14,6 +14,7 @@ from .models import (
     Slaider,
     PublicOffers,
     Help,
+    Footer,
     )
 
 
@@ -164,4 +165,20 @@ class HelpSerializer(serializers.ModelSerializer):
             'question',
             'answer',
             'photo',
+            ]
+
+
+class FooterSerializer(serializers.ModelSerializer): 
+    class Meta:
+        model = Footer
+        fields = [
+            'id',
+            'logotype',
+            'info',
+            'id_header',
+            'number',
+            'email',
+            'instagram',
+            'telegram',
+            'whatsapp',
             ]

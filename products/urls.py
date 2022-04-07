@@ -20,6 +20,7 @@ from .views import (
     AdvantagesAPI,
     PublicOfferSerializer,
     similar_products,
+    FooterAPIView,
 )
 
 
@@ -39,4 +40,5 @@ urlpatterns = [
     path('publicoffers/', PublicOfferAPIView.as_view()),
     path('collections/', CollectionModelViewSet.as_view({'get': 'list'})),
     path('help/', HelpAPIView.as_view()),
+    path('footer/', FooterAPIView.as_view()),
 ]

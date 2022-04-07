@@ -23,6 +23,7 @@ from .serializers import (
     SlaiderSerializer,
     PublicOfferSerializer,
     HelpSerializer,
+    FooterSerializer,
     )
 
 from .models import (
@@ -39,6 +40,7 @@ from .models import (
                     PublicOffers,
                     Slaider,
                     Help,
+                    Footer,
                     )
 
 
@@ -235,3 +237,35 @@ class HelpAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class FooterAPIView(APIView):
+    # def get_object(self):
+    #     try:
+    #         return Footer.objects.get(id)
+    #     except Footer.DoesNotExist:
+    #         return Http404
+
+    def get(self, request, format=None):
+        footer = Footer.objects.all()
+        serializer = FooterSerializer(footer, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = FooterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        footer = Footer.objects.all()
+        serializer = FooterSerializer(footer, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        footer = Footer.objects.get(id=id)
+        footer.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
