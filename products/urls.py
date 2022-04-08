@@ -1,8 +1,10 @@
 from django.urls import path
 
 from .views import (
+    BackCallAPIView,
     CollectionModelViewSet,
     CollectionModelViewSet,
+    FloatingAPIView,
     HelpAPIView,
     NewsModelViewSet,
     ProductColorListAPIView,
@@ -41,4 +43,7 @@ urlpatterns = [
     path('collections/', CollectionModelViewSet.as_view({'get': 'list'})),
     path('help/', HelpAPIView.as_view()),
     path('footer/', FooterAPIView.as_view()),
+    path('backcall/', BackCallAPIView.as_view()),
+    path('floating/', FloatingAPIView.as_view()),
+
 ]

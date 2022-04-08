@@ -3,7 +3,8 @@ from rest_framework import serializers
 from .models import (
     Advantages,
     Category,
-    Collection, 
+    Collection,
+    FloatingButton, 
     Product, 
     ProductColor, 
     ProductImage,
@@ -15,6 +16,7 @@ from .models import (
     PublicOffers,
     Help,
     Footer,
+    BackCall,
     )
 
 
@@ -177,8 +179,30 @@ class FooterSerializer(serializers.ModelSerializer):
             'info',
             'id_header',
             'number',
-            'email',
-            'instagram',
-            'telegram',
+            'type',
+            'link_n',
+            'account',
+            ]
+
+
+class BackCallSerializer(serializers.ModelSerializer): 
+    class Meta:
+        model = BackCall
+        fields = [
+            'id',
+            'name',
+            'number',
+            'created_at',
+            'type_of_appeal',
+            'status_of_call',
+            ]
+
+
+class FloatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FloatingButton
+        fields = [
+            'id',
             'whatsapp',
+            'telegram',
             ]

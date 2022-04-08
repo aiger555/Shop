@@ -10,8 +10,10 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 from .serializers import (
+    BackCallSerializer,
     FavoriteSerializer,
     CollectionSerializer,
+    FloatingSerializer,
     ProductSerializer,
     CategorySerializer, 
     ProductImageSerializer,
@@ -29,9 +31,11 @@ from .serializers import (
 from .models import (
                     AboutUs,
                     Advantages,
+                    BackCall,
                     Collection, 
                     Category, 
-                    Favorite, 
+                    Favorite,
+                    FloatingButton, 
                     Product, 
                     ProductImage, 
                     ProductColor,
@@ -269,3 +273,33 @@ class FooterAPIView(APIView):
         footer = Footer.objects.get(id=id)
         footer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class BackCallAPIView(APIView):
+    def get(self, request, format=None):
+        backcall = BackCall.objects.all()
+        serializer = BackCallSerializer(backcall, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = BackCallSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FloatingAPIView(APIView):
+    def get(self, request, format=None):
+        floating = FloatingButton.objects.all()
+        serializer = FloatingSerializer(floating, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = FloatingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+

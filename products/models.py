@@ -77,9 +77,6 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='products')
     image = models.ImageField(upload_to='static/images/')
 
-    def __str__(self):
-        return self.image
-
     def clean(self):
         if len(ProductImage.objects.filter(product_id=self.product.pk)) >= 8:
             raise ValidationError('The quantity should not exceed 8')
@@ -155,19 +152,55 @@ class Help(models.Model):
 
 
 class Footer(models.Model):
-    class Type(models.Model):
-        CHOICES = (
-        (0, 'Number'),
-        (1, 'Email'),
-        (2, 'Instagram'),
-        (3, 'Telegram'),
-        (4, 'WhatsApp'),
-        )
+    TYPE = (
+        ('WhatsApp', 'WhatsApp'),
+        ('Telegram', 'Telegram'),
+        ('Email', 'Email'),
+        ('Instagram', 'Instagram'),
+    )
     logotype = models.ImageField(upload_to='static/images/')
     info = models.TextField()
     id_header = models.IntegerField() 
-    number = models.IntegerField(choices=Type.CHOICES)
-    email = models.CharField(max_length=100, choices=Type.CHOICES)
-    instagram = models.CharField(max_length=100, choices=Type.CHOICES)
-    telegram = models.CharField(max_length=100, choices=Type.CHOICES)
-    whatsapp = models.IntegerField(choices=Type.CHOICES)
+    number = models.CharField(max_length=50)
+    type = models.CharField(max_length=100, choices=TYPE)
+    link_n = models.CharField(max_length=100, null=True, blank=True)
+    account = models.CharField(max_length=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.type == 'WhatsApp':
+            self.link_n = f'https://wa.me/{self.link_n}/'
+        if self.type == 'Telegram':
+            self.account = f'https://t.me/{self.account}/'
+        if self.type == 'Instagram':
+            self.account = f'https://www.instagram.com/{self.account}/'
+        if self.type == 'Email':
+            self.account = f'https://mail.google.com/{self.account}/'
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.number
+
+
+class  FloatingButton(models.Model):
+    whatsapp = models.CharField(max_length=150)
+    telegram = models.CharField(max_length=150)
+
+    def save(self, *args, **kwargs):    
+        self.whatsapp = f'https://wa.me/{self.whatsapp}/'
+        self.telegram = f'https://t.me/{self.telegram}/'
+
+    def __str__(self):
+        return f'{self.whatsapp}-WP, {self.telegram}-TG'
+
+
+class BackCall(models.Model):
+    class StatusCall(models.Model):
+        CHOICES = (
+        (0, 'No'),
+        (1, 'Yes'),    
+        )
+    name = models.CharField(max_length=50)
+    number = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    type_of_appeal = models.CharField(max_length=100)   
+    status_of_call = models.IntegerField(default=0, choices=StatusCall.CHOICES)

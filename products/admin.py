@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import (
+                    BackCall,
                     Category,
                     Collection, 
                     Product, 
@@ -14,6 +15,7 @@ from .models import (
                     PublicOffers,
                     Help,
                     Footer,
+                    FloatingButton,
                     )
 
 
@@ -30,4 +32,7 @@ admin.site.register(Advantages)
 admin.site.register(PublicOffers)
 admin.site.register(Help)
 admin.site.register(Footer)
+admin.site.register(BackCall)
+admin.site.register(FloatingButton)
+
 
