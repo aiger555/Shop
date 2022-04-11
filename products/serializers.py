@@ -38,7 +38,9 @@ class ProductSerializer(serializers.ModelSerializer):
                 'get_absolute_url',
                 'articul', 
                 'color', 
-                'price', 
+                'price',
+                'old_price',
+                'discount', 
                 'description', 
                 'images',
                 'size_row', 
@@ -46,6 +48,8 @@ class ProductSerializer(serializers.ModelSerializer):
                 'fabric_structure', 
                 'fabric', 
                 'status',
+                'created_at',
+                'available',
                 ]
 
 
