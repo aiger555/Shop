@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponse
 from django.db.models import Q
 from django.shortcuts import render
 
+from rest_framework import filters, generics
 from rest_framework import status, authentication, permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.views import APIView
@@ -71,6 +72,13 @@ class CollectionModelViewSet(ModelViewSet):
     serializer_class = CollectionSerializer
     queryset = Collection.objects.all()
     pagination_class = Pagination
+
+
+class ProductAPIView(generics.ListCreateAPIView):
+    search_fields = ['name']
+    filter_backends = (filters.SearchFilter,)
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 
 class ProductListModelViewSet(ModelViewSet):
